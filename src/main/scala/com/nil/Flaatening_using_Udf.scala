@@ -3,10 +3,8 @@ package com.nil
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions.{col, collect_list, _}
 
-object test {
+object Flaatening_using_Udf {
 
-
-  //def addOne(elements: Seq[String]):Any = return elements.map(element => ("id",s"CIS-$element","CISKey","Ind"))
   def addOne(elements: Seq[String]) = elements.map(element => (List("id",s"CIS-$element","CISKey","Ind").grouped(2).collect { case List(k, v) => k -> v }.toMap))
 
 
@@ -18,12 +16,16 @@ object test {
     import spark.implicits._
     val df = spark.read.format("csv").option("header", "true").load("C:\\Users\\Nilay\\Desktop\\sample.csv")
     val groupBy = df.columns.filter(_!="ciskey")
+
+    //ForSpark 2.4 we can use
     //val df2=df.groupBy(groupBy.map(col): _*).agg(collect_list($"ciskey").as("accounts"))
       //.withColumn("customers", expr("TRANSFORM(accounts, " +
         //"x -> named_struct('ciskey_no', x, 'ciskey_val', 'IND'))"))
       //.withColumn("accounts",
         //struct($"acct_no", $"customers"))
       //.drop("customers")
+
+
     val df2=df.groupBy(groupBy.map(col): _*).agg(collect_list($"ciskey").as("accounts"))
           .withColumn("customers", plusOneInt($"accounts"))
     .withColumn("accounts", struct($"acct_no", $"customers"))
@@ -35,3 +37,4 @@ object test {
 
   }
 }
+
