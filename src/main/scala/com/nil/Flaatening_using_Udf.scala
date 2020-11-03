@@ -18,20 +18,20 @@ object Flaatening_using_Udf {
     val groupBy = df.columns.filter(_!="ciskey")
 
     //ForSpark 2.4 we can use
-    //val df2=df.groupBy(groupBy.map(col): _*).agg(collect_list($"ciskey").as("accounts"))
-      //.withColumn("customers", expr("TRANSFORM(accounts, " +
-        //"x -> named_struct('ciskey_no', x, 'ciskey_val', 'IND'))"))
-      //.withColumn("accounts",
-        //struct($"acct_no", $"customers"))
+    val df2=df.groupBy(groupBy.map(col): _*).agg(collect_list($"ciskey").as("accounts"))
+      .withColumn("customers", expr("TRANSFORM(accounts, " +
+        "x -> named_struct('ciskey_no', x, 'ciskey_val', 'IND'))"))
+      //.withColumn("accounts", struct($"acct_no", $"customers"))
       //.drop("customers")
 
 
-    val df2=df.groupBy(groupBy.map(col): _*).agg(collect_list($"ciskey").as("accounts"))
-          .withColumn("customers", plusOneInt($"accounts"))
-    .withColumn("accounts", struct($"acct_no", $"customers"))
-    .drop("customers")
+    //val df2=df.groupBy(groupBy.map(col): _*).agg(collect_list($"ciskey").as("accounts"))
+          //.withColumn("customers", plusOneInt($"accounts"))
+    //.withColumn("accounts", struct($"acct_no", $"customers"))
+    //.drop("customers")
     //df2.printSchema()
-    df2.coalesce(1).write.json("C:\\Users\\Nilay\\Desktop\\json1")
+    //df2.coalesce(1).write.json("C:\\Users\\Nilay\\Desktop\\json1")
+    df2.show()
 
 
 
