@@ -12,6 +12,8 @@ libraryDependencies ++= Seq(
   "org.apache.kafka" % "kafka-clients" % "0.10.0.0",
   "org.apache.spark" %% "spark-sql-kafka-0-10" % "2.4.0" % "provided",
   "org.json4s" %% "json4s-jackson" % "3.7.0-M6",
-  "org.scala-lang.modules" %% "scala-xml" % "2.0.0-M1"
+  "org.scala-lang.modules" %% "scala-xml" % "2.0.0-M1",
+  "ch.qos.logback" % "logback-classic" % "1.2.3",
+  "com.typesafe.scala-logging" %% "scala-logging" % "3.9.2"
 
 )

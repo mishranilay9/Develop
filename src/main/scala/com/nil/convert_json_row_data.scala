@@ -18,13 +18,12 @@ object convert_json_row_data {
     implicit val formats = Serialization.formats(NoTypeHints)
     var colValues = inputRow.getValuesMap[Any](inputRow.schema.fieldNames)
       //.filter(x => x._2!= null && x._2!= "")
-
+    print(inputRow.get(0)+"\n")
     var empty = new ListBuffer[Any]()
      val m = scala.collection.mutable.Map[String,Any]()
     m += "AR" -> colValues.get("number")
     m += "AZ" -> "Arizona"
     empty+= m
-
     val n = scala.collection.mutable.Map[String,Any]()
     n += "AR" -> "Azerbizan"
     n += "AZ" -> "Arizona"
@@ -33,8 +32,6 @@ object convert_json_row_data {
     Serialization.write(colValues)
   }
   def main(args: Array[String]) {
-
-
     val spark = SparkSession.builder().appName("avrochk").master("local").getOrCreate()
     spark.udf.register("myFilterFunction", returnNotEmptyCols _)
     import spark.implicits._
@@ -51,12 +48,6 @@ object convert_json_row_data {
     //val newDf=df.withColumn("newcl",df.rdd.map(x=>x))
     //val s=df.rdd.map(x=>(x(0),"hiii",x(1)))
     //s.foreach(println)
-
-
-
-
-
-
 
   }
 

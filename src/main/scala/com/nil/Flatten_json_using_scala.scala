@@ -30,28 +30,29 @@ object Flatten_json_using_scala {
     |    }
     |"""
 
-
-
   def main(args: Array[String]): Unit = {
 
 
 
     val jsonString = Source.fromFile("C:\\Users\\Nilay\\Desktop\\vld.json").getLines.mkString
     val jsonMap: Map[String, Any] = JSON.parseFull(jsonString).get.asInstanceOf[Map[String, Any]]
+    val itrable1=flattenMap(jsonMap).toMap
+    print(itrable1.getOrElse("Rate",0))
 
 
 
 
-    val itrable1=flattenMap(jsonMap).toSeq
-    val c=(itrable1.map(x=>x._1)).mkString(",")
-    val d=itrable1.map(x=>s""""${x._2}"""")
 
-
-    val file = new File("C:\\Users\\Nilay\\Desktop\\Test1.csv")
-    val bw1 = new BufferedWriter(new FileWriter(file))
-    bw1.write(c+System.lineSeparator())
-    bw1.write(d.mkString(","))
-    bw1.close()
+//    val itrable1=flattenMap(jsonMap).toSeq
+//    val c=(itrable1.map(x=>x._1)).mkString(",")
+//    val d=itrable1.map(x=>s""""${x._2}"""")
+//
+//
+//    val file = new File("C:\\Users\\Nilay\\Desktop\\Test1.csv")
+//    val bw1 = new BufferedWriter(new FileWriter(file))
+//    bw1.write(c+System.lineSeparator())
+//    bw1.write(d.mkString(","))
+//    bw1.close()
 
 
 
