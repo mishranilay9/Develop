@@ -3,24 +3,22 @@ import org.apache.spark.sql._
 import org.apache.spark.sql.functions.{callUDF, struct, udf}
 import org.json4s.NoTypeHints
 import org.json4s.jackson.Serialization
-
 import scala.collection.mutable.ListBuffer
-
 import org.apache.spark.sql.SparkSession
 
-object convert_json_row_data {
-//  def myFilterFunction(r:Row) ={
-//    var s=r.getValuesMap[Any](r.schema.fieldNames)
-//    print(s)
-//  }
+object json_flat {
+  //  def myFilterFunction(r:Row) ={
+  //    var s=r.getValuesMap[Any](r.schema.fieldNames)
+  //    print(s)
+  //  }
 
   def returnNotEmptyCols(inputRow: Row): String = {
     implicit val formats = Serialization.formats(NoTypeHints)
     var colValues = inputRow.getValuesMap[Any](inputRow.schema.fieldNames)
-      //.filter(x => x._2!= null && x._2!= "")
+    //.filter(x => x._2!= null && x._2!= "")
     print(inputRow.get(0)+"\n")
     var empty = new ListBuffer[Any]()
-     val m = scala.collection.mutable.Map[String,Any]()
+    val m = scala.collection.mutable.Map[String,Any]()
     m += "AR" -> colValues.get("number")
     m += "AZ" -> "Arizona"
     empty+= m
@@ -40,16 +38,14 @@ object convert_json_row_data {
       (13, "mouse"),
       (14, "horse")
     ).toDF("number", "word")
-
+    var dr=df.rdd.collect
     val newDF=df.withColumn("newcl",callUDF("myFilterFunction",struct(df.columns.map(df(_)) : _*)))
     newDF.show(3,0)
 
-    // val map = df.head().getValuesMap(df.columns)
-    //val newDf=df.withColumn("newcl",df.rdd.map(x=>x))
-    //val s=df.rdd.map(x=>(x(0),"hiii",x(1)))
-    //s.foreach(println)
+
 
   }
 
 
 }
+
