@@ -8,9 +8,6 @@ import org.apache.spark.sql.types.StructType
 import org.apache.spark.sql.{Column, DataFrame, SparkSession}
 import org.apache.spark.sql.functions.lit
 object test1 {
-
-
-
   def main(args: Array[String]) {
 
     val spark = SparkSession.builder().appName("avrochk").master("local").getOrCreate()
@@ -43,6 +40,4 @@ object test1 {
       //data4.write.format("avro").save("C:\\Users\\Nilay\\Desktop\\avro")
 
   }
-
-
 }
